@@ -34,10 +34,12 @@ def main():
     net = Net().float()
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(net.parameters(), lr=0.01, momentum=0.9)
+    scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
 
     trainloader, _ = get_train_test_loaders()
-    for epoch in range(2):  # loop over the dataset multiple times
+    for epoch in range(12):  # loop over the dataset multiple times
         train(net, criterion, optimizer, trainloader, epoch)
+        scheduler.step()
     torch.save(net.state_dict(), "checkpoint.pth")
 
 
