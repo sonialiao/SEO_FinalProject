@@ -9,6 +9,8 @@ from dataset import get_train_test_loaders
 
 
 class Net(nn.Module):
+
+    # building the neural net model
     def __init__(self):
         super(Net, self).__init__()
         self.conv1 = nn.Conv2d(1, 6, 3)
@@ -19,6 +21,7 @@ class Net(nn.Module):
         self.fc2 = nn.Linear(120, 48)
         self.fc3 = nn.Linear(48, 25)
 
+    # the forward pass / how data is passed through the model
     def forward(self, x):
         x = F.relu(self.conv1(x))
         x = self.pool(F.relu(self.conv2(x)))
@@ -32,12 +35,18 @@ class Net(nn.Module):
 
 def main():
     net = Net().float()
-    criterion = nn.CrossEntropyLoss()
+    criterion = nn.CrossEntropyLoss()   # evaluation metric
+
+    # gradient step optimizer
     optimizer = optim.SGD(net.parameters(), lr=0.01, momentum=0.9)
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
 
+    # load dataset & define how many times we train
     trainloader, _ = get_train_test_loaders()
-    for epoch in range(12):  # loop over the dataset multiple times
+    NUM_EPOCHS = 12
+
+    # for each time we loop through dataset, train & take 1 gradient step
+    for epoch in range(NUM_EPOCHS):
         train(net, criterion, optimizer, trainloader, epoch)
         scheduler.step()
     torch.save(net.state_dict(), "checkpoint.pth")
@@ -46,20 +55,22 @@ def main():
 def train(net, criterion, optimizer, trainloader, epoch):
     running_loss = 0.0
     for i, data in enumerate(trainloader, 0):
+        
+        # get data, reset gradients
         inputs = Variable(data['image'].float())
         labels = Variable(data['label'].long())
         optimizer.zero_grad()
 
-        # forward + backward + optimize
+        # forward pass, backward pass, optimize step
         outputs = net(inputs)
         loss = criterion(outputs, labels[:, 0])
         loss.backward()
         optimizer.step()
 
-        # print statistics
+        # print loss value for every 100 samples seen
         running_loss += loss.item()
         if i % 100 == 0:
-            print('[%d, %5d] loss: %.6f' % (epoch, i, running_loss / (i + 1)))
+            print(f"[{epoch:d}, {i:4d}] loss: {running_loss / (i + 1):.6f}")
 
 
 if __name__ == '__main__':
