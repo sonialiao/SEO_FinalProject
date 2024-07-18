@@ -32,3 +32,8 @@ class Net(nn.Module):
     net = Net().float()
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(net.parameters(), lr=0.01, momentum=0.9)
+
+    trainloader, _ = get_train_test_loaders()
+    for epoch in range(2):  # loop over the dataset multiple times
+        train(net, criterion, optimizer, trainloader, epoch)
+    torch.save(net.state_dict(), "checkpoint.pth")
