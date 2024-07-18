@@ -5,7 +5,8 @@ import torch.nn.functional as F
 import torch.optim as optim
 import torch
 
-from step_2_dataset import get_train_test_loaders
+from dataset import get_train_test_loaders
+
 
 class Net(nn.Module):
     def __init__(self):
@@ -16,7 +17,7 @@ class Net(nn.Module):
         self.conv3 = nn.Conv2d(6, 16, 3)
         self.fc1 = nn.Linear(16 * 5 * 5, 120)
         self.fc2 = nn.Linear(120, 48)
-        self.fc3 = nn.Linear(48, 24)
+        self.fc3 = nn.Linear(48, 25)
 
     def forward(self, x):
         x = F.relu(self.conv1(x))
@@ -28,7 +29,8 @@ class Net(nn.Module):
         x = self.fc3(x)
         return x
 
-    def main():
+
+def main():
     net = Net().float()
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(net.parameters(), lr=0.01, momentum=0.9)
@@ -37,3 +39,26 @@ class Net(nn.Module):
     for epoch in range(2):  # loop over the dataset multiple times
         train(net, criterion, optimizer, trainloader, epoch)
     torch.save(net.state_dict(), "checkpoint.pth")
+
+
+def train(net, criterion, optimizer, trainloader, epoch):
+    running_loss = 0.0
+    for i, data in enumerate(trainloader, 0):
+        inputs = Variable(data['image'].float())
+        labels = Variable(data['label'].long())
+        optimizer.zero_grad()
+
+        # forward + backward + optimize
+        outputs = net(inputs)
+        loss = criterion(outputs, labels[:, 0])
+        loss.backward()
+        optimizer.step()
+
+        # print statistics
+        running_loss += loss.item()
+        if i % 100 == 0:
+            print('[%d, %5d] loss: %.6f' % (epoch, i, running_loss / (i + 1)))
+
+
+if __name__ == '__main__':
+    main()
