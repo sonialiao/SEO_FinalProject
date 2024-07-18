@@ -49,7 +49,7 @@ def main():
     for epoch in range(NUM_EPOCHS):
         train(net, criterion, optimizer, trainloader, epoch)
         scheduler.step()
-    torch.save(net.state_dict(), "checkpoint.pth")
+    torch.save(net.state_dict(), "classifier_model/checkpoint.pth")
 
 
 def train(net, criterion, optimizer, trainloader, epoch):

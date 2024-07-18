@@ -45,7 +45,7 @@ class SignLanguageMNIST(Dataset):
         return labels, samples
 
     def __init__(self,
-                 path: str = "data/sign_mnist_train.csv",
+                 path: str = "classifier_model/data/sign_mnist_train.csv",
                  mean: List[float] = [0.485],
                  std: List[float] = [0.229]):
 
@@ -79,10 +79,10 @@ class SignLanguageMNIST(Dataset):
 
 # loads in data for train and test set
 def get_train_test_loaders(batch_size=32):
-    trainset = SignLanguageMNIST('data/sign_mnist_train.csv')
+    trainset = SignLanguageMNIST('classifier_model/data/sign_mnist_train.csv')
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, shuffle=True)    # noqa
 
-    testset = SignLanguageMNIST('data/sign_mnist_test.csv')
+    testset = SignLanguageMNIST('classifier_model/data/sign_mnist_train.csv')
     testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size, shuffle=False)     # noqa
     return trainloader, testloader
 

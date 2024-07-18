@@ -47,7 +47,7 @@ def validate():
     # load in datasets & model (after being trained in train.py)
     trainloader, testloader = get_train_test_loaders()
     net = Net().float()
-    pretrained_model = torch.load("checkpoint.pth")
+    pretrained_model = torch.load("classifier_model/checkpoint.pth")
     net.load_state_dict(pretrained_model)
 
     print('=' * 10, 'PyTorch', '=' * 10)
@@ -66,7 +66,7 @@ def export():
 
     # build model again
     net = Net().float()
-    pretrained_model = torch.load("checkpoint.pth")
+    pretrained_model = torch.load("classifier_model/checkpoint.pth")
     net.load_state_dict(pretrained_model)
 
     # export to onnx
