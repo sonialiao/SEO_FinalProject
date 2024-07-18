@@ -1,13 +1,24 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    <title>Placeholder Title</title>
+    Placeholder Title
 {% endblock %}
 
 {% block content %}
-<div class="right-aligned-container">
-    <img src="/static/ASL_chart.jpg" alt="ASL Chart" id="aslChart">
-    <textarea rows="10" cols="30" readonly id="transcriptionTextarea"></textarea>
+
+<div class="containers-wrapper">
+    <div id="container">
+        <video autoplay="true" id="videoElement"></video>
+        <button id="startButton">Start Webcam</button>
+        <button id="stopButton" disabled>Stop Webcam</button>
+    </div>
+    
+    <div class="right-aligned-container">
+        <img src="/static/ASL_chart.jpg" alt="ASL Chart" id="aslChart">
+        <textarea rows="10" cols="30" readonly id="transcriptionTextarea"></textarea>
+    </div>
 </div>
+
+
     
 {% endblock %}
