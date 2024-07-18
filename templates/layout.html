@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        .right-aligned-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <header>
+    </header>
+    
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    
+    <footer>
+        <!-- Footer content here -->
+    </footer>
+
+    <script>
+        window.onload = function() {
+            var image = document.getElementById('aslChart');
+            var textarea = document.getElementById('transcriptionTextarea');
+            textarea.style.width = image.offsetWidth + 'px';
+        }
+    </script>
+
+</body>
+</html>
