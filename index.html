@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcam Access</title>
+    <style>
+        h1 {
+            font-family: sans-serif;
+            color: #333;
+        }
+        
+        body {
+            margin: 50px;
+        }
+
+        #container {
+            width: 500px;
+            height: 375px;
+            background-color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Display Webcam</h1>
+    
+    <div id="container">
+        <video autoplay="true" id="videoElement"></video>
+        <button id="startButton">Start Webcam</button>
+        <button id="stopButton" disabled>Stop Webcam</button>
+    </div>
+    <script>
+        let video = document.querySelector("#videoElement");
+        
+        if (navigator.mediaDevices.getUserMedia)
+        {
+            navigator.mediaDevices.getUserMedia({video: true})
+                .then(function (stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function(error) {
+                    console.log("Something went wrong!")
+                })
+        }
+
+        else
+        {
+            console.log("getUserMedia not supported!");
+        }
+        
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        
+        let stream;
+
+        startButton.addEventListener('click', async () => {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                startButton.disabled = true;
+                stopButton.disabled = false;
+            } catch (err) {
+                console.error('Error accessing webcam: ', err);
+            }
+        });
+
+        stopButton.addEventListener('click', () => {
+            stream.getTracks().forEach(track => track.stop());
+            startButton.disabled = false;
+            stopButton.disabled = true;
+        });
+    </script>
+</body>
+</html>
