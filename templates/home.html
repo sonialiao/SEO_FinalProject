@@ -1,16 +1,15 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    Placeholder Title
+    Sign Language Translator
 {% endblock %}
 
 {% block content %}
-
 <div class="containers-wrapper">
     <div id="container">
-        <video autoplay="true" id="videoElement"></video>
+        <img id="videoElement" />
         <button id="startButton">Start Webcam</button>
-        <button id="stopButton" disabled>Stop Webcam</button>
+        <button id="stopButton">Stop Webcam</button>
     </div>
     
     <div class="right-aligned-container">
@@ -19,6 +18,25 @@
     </div>
 </div>
 
+<script>
+    const videoElement = document.getElementById('videoElement');
+    const startButton = document.getElementById('startButton');
+    const stopButton = document.getElementById('stopButton');
+    const transcriptionTextarea = document.getElementById('transcriptionTextarea');
 
-    
+    function startWebcam() {
+        videoElement.src = "{{ url_for('video_feed') }}";
+        startButton.disabled = true;
+        stopButton.disabled = false;
+    }
+
+    function stopWebcam() {
+        videoElement.src = "";
+        startButton.disabled = false;
+        stopButton.disabled = true;
+    }
+
+    startButton.addEventListener('click', startWebcam);
+    stopButton.addEventListener('click', stopWebcam);
+</script>
 {% endblock %}

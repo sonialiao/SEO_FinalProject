@@ -3,40 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}Sign Language Translator{% endblock %}</title>
     <style>
-        .right-aligned-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            float: right;
-        }
-        #container {
-            width: 500px;
-            height: 375px;
-            background-color: #666;
+        body {
+            font-family: Arial, sans-serif;
         }
         .containers-wrapper {
             display: flex;
-            justify-content: space-around;
-            align-items: center;
+            justify-content: space-between;
+        }
+        #container {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .right-aligned-container {
+            flex: 1;
+        }
+        #videoElement {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+        }
+        #aslChart {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+        }
+        #transcriptionTextarea {
+            width: 100%;
+            max-width: 300px;
+            height: 150px;
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <header>
-    </header>
-    
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-    
-    <footer>
-        <!-- Footer content here -->
-    </footer>
-
-    <script type="module" src="/static/scripts/onLoad.js"></script>
-
+    {% block content %}{% endblock %}
 </body>
 </html>
