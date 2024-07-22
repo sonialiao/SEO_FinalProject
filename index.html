@@ -5,20 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webcam Access</title>
     <style>
-        h1 {
-            font-family: sans-serif;
-            color: #333;
-        }
-        
-        body {
-            margin: 50px;
-        }
+        /* Inside your <style> tag */
+h1 {
+    font-family: 'Montserrat', sans-serif; /* Modern font (replace if needed) */
+    color: #fff; /* White text */
+    text-align: center; /* Center the title */
+}
 
-        #container {
-            width: 500px;
-            height: 375px;
-            background-color: #666;
-        }
+body {
+    margin: 0; /* Remove default body margin */
+    font-family: 'Open Sans', sans-serif; /* Clean sans-serif for body */
+    background-color: #222; /* Dark background */
+    color: #eee; /* Light text color */
+    display: flex; /* Enable flexbox for centering */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+#container {
+    width: 500px;
+    height: auto; /* Automatically adjust height to video aspect ratio */
+    background-color: #333; /* Slightly lighter container */
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+video {
+    width: 100%; /* Make video fill container width */
+    display: block; /* Prevent extra space below video */
+    border-radius: 4px; /* Slightly rounded video corners */
+}
+
+button {
+    background-color: #007bff; /* Blue button */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px; /* Add space above buttons */
+    transition: background-color 0.3s; /* Smooth transition on hover */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+button:disabled {
+    opacity: 0.6; /* Dim disabled buttons */
+    cursor: not-allowed;
+}
+
     </style>
 </head>
 <body>
