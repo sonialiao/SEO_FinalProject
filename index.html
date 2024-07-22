@@ -6,15 +6,17 @@
     <title>Webcam Access</title>
     <style>
         /* Inside your <style> tag */
-h1 {
-    font-family: 'Montserrat', sans-serif; /* Modern font (replace if needed) */
-    color: #fff; /* White text */
-    text-align: center; /* Center the title */
+            h1 {
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;/* Handgloves font for the title */
+    color: #fff; 
+    text-align: center;
+    font-size: 3em; /* Increase title size */
+    margin-bottom: 20px; /* Add space below title */
 }
 
 body {
     margin: 0; /* Remove default body margin */
-    font-family: 'Open Sans', sans-serif; /* Clean sans-serif for body */
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;/* Handgloves font for the title */
     background-color: #222; /* Dark background */
     color: #eee; /* Light text color */
     display: flex; /* Enable flexbox for centering */
@@ -31,6 +33,7 @@ body {
     padding: 20px;
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    background: linear-gradient(135deg, #a04add, #b49de5, #ffffff); /* Gradient background */
 }
 
 video {
@@ -40,18 +43,19 @@ video {
 }
 
 button {
-    background-color: #007bff; /* Blue button */
-    color: white;
+    background-color: transparent;
+    color: linear-gradient(135deg, #a04add, #b49de5, #ffffff);
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     margin-top: 10px; /* Add space above buttons */
     transition: background-color 0.3s; /* Smooth transition on hover */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: rgba(255, 255, 255, 0.203); /* Darker blue on hover */
 }
 
 button:disabled {
