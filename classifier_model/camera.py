@@ -12,7 +12,7 @@ std = 0.229 * 255.
 ort_session = ort.InferenceSession("signlanguage.onnx")
 
 # Initialize video capture for webcam
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 # Load in library helpers for identifying hand location
 mp_hands = mp.solutions.hands
@@ -23,7 +23,10 @@ mp_drawing = mp.solutions.drawing_utils
 def draw_hand_box(frame, hand_landmarks):
     h, w, c = frame.shape
     for handLMs in hand_landmarks:
-        x_max, y_max, x_min, y_min = 0, 0, w, h
+        x_max = 0
+        y_max = 0
+        x_min = w
+        y_min = h
         for lm in handLMs.landmark:
             x, y = int(lm.x * w), int(lm.y * h)
             if x > x_max:
