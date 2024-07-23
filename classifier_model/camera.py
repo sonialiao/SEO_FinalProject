@@ -73,7 +73,7 @@ def gen_frames():
             index = np.argmax(y, axis=1)
             letter = index_to_letter[int(index)]
 
-            cv2.putText(frame, letter, (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 2.0, (0, 255, 0), thickness=2)
+            cv2.putText(frame, letter, (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 2.0, (139,0,139), thickness=5)
 
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
