@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.containers-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+#container {
+    flex: 1;
+    margin-right: 20px;
+}
+.right-aligned-container {
+    flex: 1;
+}
+#videoElement {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+}
+#aslChart {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+}
+#transcriptionTextarea {
+    width: 100%;
+    max-width: 300px;
+    height: 150px;
+    margin-top: 20px;
+}
+button {
+    margin-top: 10px;
+}
