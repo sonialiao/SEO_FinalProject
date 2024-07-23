@@ -84,3 +84,9 @@ button:disabled {
     margin-right: 20px;
     padding: 10px;
 }
+
+#nav {
+    background: linear-gradient(135deg, #a04add, #b49de5, #ffffff);
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
