@@ -27,7 +27,7 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
     background: linear-gradient(135deg, #a04add, #b49de5, #ffffff); /* Gradient background */
     flex: 1;
-    margin-right: 20px;
+    margin: 20px;
 }
 
 .containers-wrapper {
@@ -39,7 +39,7 @@ body {
     flex: 1;
 }
 
-button {
+button, #submitButton {
     background-color: transparent;
     color: linear-gradient(135deg, #a04add, #b49de5, #ffffff);
     padding: 10px 15px;
@@ -78,4 +78,9 @@ button:disabled {
     max-width: 300px;
     height: 150px;
     margin-top: 20px;
+}
+
+#transcriptionBox {
+    margin-right: 20px;
+    padding: 10px;
 }
