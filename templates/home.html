@@ -1,8 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block title %}
-    Sign Language Translator
-{% endblock %}
+
 
 {% block content %}
 <div class="containers-wrapper">
@@ -24,6 +22,8 @@
     const stopButton = document.getElementById('stopButton');
     const transcriptionTextarea = document.getElementById('transcriptionTextarea');
 
+    let lastAppendedLetter = "";
+
     function startWebcam() {
         videoElement.src = "{{ url_for('video_feed') }}";
         startButton.disabled = true;
@@ -35,6 +35,27 @@
         startButton.disabled = false;
         stopButton.disabled = true;
     }
+
+    async function fetchDetectedLetter() {
+            try {
+                const response = await fetch('/detected_letter');
+                const data = await response.json();
+                const letter = data.letter;
+
+                console.log('Detected letter:', letter);
+
+                // Append the detected letter to the textarea if it's a new stable letter or if a pause was detected
+                if (letter && (letter !== lastAppendedLetter || lastAppendedLetter === "")) {
+                    transcriptionTextarea.value += letter;
+                    lastAppendedLetter = letter;
+                }
+            } catch (error) {
+                console.error('Error fetching detected letter:', error);
+            }
+        }
+
+    // Fetch detected letters every 500 milliseconds
+    setInterval(fetchDetectedLetter, 500);
 
     startButton.addEventListener('click', startWebcam);
     stopButton.addEventListener('click', stopWebcam);

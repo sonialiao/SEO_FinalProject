@@ -46,6 +46,15 @@ def draw_hand_box(frame, hand_landmarks):
 
 # Function to generate frames for the video feed
 def gen_frames():
+    prev = ""
+    stable_letter = ""
+    consecutive_frames = 0
+    stability_threshold = 5
+    pause_frames = 0
+    pause_threshold = 10
+    
+    letter = None
+    
     while True:
         ret, frame = cap.read()
         if not ret:
@@ -73,10 +82,32 @@ def gen_frames():
             index = np.argmax(y, axis=1)
             letter = index_to_letter[int(index)]
 
-            cv2.putText(frame, letter, (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 2.0, (0, 255, 0), thickness=2)
+            cv2.putText(frame, letter, (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 2.0, (139,0,139), thickness=5)
 
+        # If no letter is detected, increment the pause frames counter
+        if not hand_landmarks:
+            pause_frames += 1
+        else:
+            pause_frames = 0
+
+        # Check for stability in letter detection
+        if letter == prev and pause_frames < pause_threshold:
+            consecutive_frames += 1
+        else:
+            consecutive_frames = 0
+            
+        # If the letter has been stable for a certain number of frames, update the stable letter
+        if consecutive_frames >= stability_threshold:
+            stable_letter = letter
+
+        if pause_frames >= pause_threshold:
+            stable_letter = ""
+        
+        prev = letter
+        
+        print(stable_letter, letter, prev, consecutive_frames, pause_frames, flush=True)
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
 
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n', stable_letter)
