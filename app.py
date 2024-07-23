@@ -1,6 +1,7 @@
-from flask import Flask, render_template, Response, request, redirect
+from flask import Flask, render_template, Response, request, redirect, jsonify
 from classifier_model import camera  # Import the camera module
 import speech_recognition as sr
+import logging
 
 app = Flask(__name__)
 
@@ -12,7 +13,13 @@ def index():
 # Route to stream video feed
 @app.route('/video_feed')
 def video_feed():
-    return Response(camera.gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(gen_video(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+# Route to previously detected letter
+@app.route('/detected_letter')
+def detected_letter():
+    letter = next(letter_generator)
+    return jsonify({'letter': letter})
 
 @app.route('/transcription', methods=['GET','POST'])
 def transcribe():
@@ -38,5 +45,13 @@ def transcribe():
 
     return render_template('transcription.html', transcript_text=transcript_text)
 
+def gen_video():
+    for frame, letter in camera.gen_frames():
+        yield frame
+
+# Generator for detected letters
+letter_generator = (letter for _, letter in camera.gen_frames())
+
 if __name__ == '__main__':
+    app.logger.setLevel(logging.ERROR)
     app.run(debug=True)
