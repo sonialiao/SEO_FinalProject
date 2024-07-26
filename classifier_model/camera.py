@@ -56,32 +56,43 @@ def gen_frames():
     letter = None
     
     while True:
+        # get frame from webcam
         ret, frame = cap.read()
         if not ret:
             continue
 
+        # convert to RGB and find hand landmarks
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         hand_results = hands.process(frame_rgb)
         hand_landmarks = hand_results.multi_hand_landmarks
         if hand_landmarks:
+
+            # get bounding box around hand using landmarks
             x_min, x_max, y_min, y_max = draw_hand_box(frame, hand_landmarks)
 
+            # draw landmarks on hand
             for hand_landmarks in hand_results.multi_hand_landmarks:
                 mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
+            # convert to grayscale and crop to hand bounding box
             frame_gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
             hand_frame = frame_gray[y_min:y_max, x_min:x_max]
             if hand_frame.size == 0:
                 continue
+
+            # resize, scale values by standard dev. and shape into right format
             x = cv2.resize(hand_frame, (28, 28))
             x = (x - mean) / std
             x = x.reshape(1, 1, 28, 28).astype(np.float32)
 
+            # get output from onnx runtime session
             y = ort_session.run(None, {'input': x})[0]
 
+            # determine final prediction letter
             index = np.argmax(y, axis=1)
             letter = index_to_letter[int(index)]
 
+            # display on frame
             cv2.putText(frame, letter, (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 2.0, (139,0,139), thickness=5)
 
         # If no letter is detected, increment the pause frames counter
